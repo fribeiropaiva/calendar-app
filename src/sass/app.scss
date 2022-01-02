@@ -1,11 +1,19 @@
+-root {
+  --header-blue: #2f74b5;
+  --weekend-grey: #f2f2f2;
+  --white: #fff;
+  --black: #000;
+}
+
 html,
 body {
   margin: 0;
+  padding: 0;
   color: #555;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
-  font-size: 14px;
+  font-size: 1rem;
   line-height: 1.4;
 
   > div {
@@ -21,10 +29,6 @@ code {
 * {
   box-sizing: border-box;
   margin: 0;
-}
-
-* + * {
-  margin-top: 1rem;
 }
 
 h1,
@@ -47,11 +51,6 @@ strong {
 
 li {
   margin-top: 0.25rem;
-}
-
-.container {
-  width: 800px;
-  margin: 2rem auto;
 }
 
 .readme {
