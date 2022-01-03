@@ -4,6 +4,7 @@ import './styles.scss';
 
 export function CalendarDay({ day, value, calendarState }) {
   const [reminders, setReminders] = useState([]);
+  const [editMode, setEditMode] = useState(false);
 
   const isThisMonth = day.format('MMMM') === value.clone().format('MMMM');
   const dayName = day.format('dddd');
@@ -25,8 +26,18 @@ export function CalendarDay({ day, value, calendarState }) {
     }
   }, [date, calendarState, isThisMonth]);
 
+  function handleCalendarDayEditing() {
+    setEditMode(true)
+  }
+
   return (
-    <div className={`calendar-day ${isWeekendDay ? 'weekend-day' : ''} ${isThisMonth ? '' : 'not-from-this-month'}`}>
+    <div
+      onClick={handleCalendarDayEditing}
+      className={`calendar-day ${isWeekendDay ? `weekend-day ${dayName.toLowerCase()}` : ''}
+                ${isThisMonth ? '' : 'not-from-this-month'}
+                ${editMode ? 'edit-mode' : ''}`}
+      onMouseLeave={() => setEditMode(false)}
+    >
       <div className='day-header'>
         <div className='day-container'>
           {dayNumber}

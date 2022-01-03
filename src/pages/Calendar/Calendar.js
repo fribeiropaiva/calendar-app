@@ -75,6 +75,10 @@ function Calendar(props) {
     setCity('');
   }
 
+  function handleEditReminder() {
+    console.log('editing');
+  }
+
   return (
     <div className="container">
       <header>

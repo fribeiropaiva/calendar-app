@@ -87,6 +87,18 @@
       }
     }
   }
+
+  &.edit-mode {
+    transform: scale(3);
+    &.weekend-day {
+      &.saturday {
+        transform: scale(2.5) translate(-30%, 0);
+      }
+      &.sunday {
+        transform: scale(2.5) translate(30%, 0);
+      }
+    }
+  }
 }
 
 @media (max-width: 720px) {
