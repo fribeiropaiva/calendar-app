@@ -1,5 +1,5 @@
 .container {
-  width: 95vw;
+  width: 90vw;
   margin: 0 auto;
 
   header,
@@ -8,13 +8,7 @@
   }
 
   header {
-    // display: flex;
-    // justify-content: space-around;
-    // align-items: center;
-    // padding: 0 10px;
     background: #2f74b5;
-    // margin: 0 auto;
-    // flex-wrap: nowrap;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: repeat(1, 1fr);
     padding-top: 3px;

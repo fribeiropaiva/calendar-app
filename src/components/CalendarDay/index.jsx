@@ -1,11 +1,17 @@
 import React from 'react';
 import './styles.scss';
 
-export function CalendarDay({ date, showModal }) {
+export function CalendarDay({ day, value }) {
+  const isThisMonth = day.format('MMMM') === value.clone().format('MMMM');
+  const dayName = day.format('dddd');
+  const dayNumber = day.format('D');
+  const date = day.format("MM/DD/YYYY");
+  const isWeekendDay = (dayName === 'Saturday' || dayName === 'Sunday')
+
   return (
-    <div className='calendar-day'>
-      <div className="day-container">
-        {date}
+    <div className={`calendar-day ${isWeekendDay ? 'weekend-day' : ''} ${isThisMonth ? '' : 'not-from-this-month'}`}>
+      <div className='day-container'>
+        {dayNumber}
       </div>
       <div className='reminders-container'>
         <p className='reminder'>Get groceries</p>
