@@ -1,0 +1,29 @@
+form {
+  display: flex;
+  flex-direction: column;
+
+  .close-modal-button {
+    position: relative;
+    border: none;
+    cursor: pointer;
+    background: none;
+    align-self: flex-end;
+  }
+
+  label {
+    input {
+      width: 90%;
+      margin-left: 10px;
+    }
+  }
+
+  .submit-button {
+    align-self: center;
+    margin-top: 10px;
+    border: #2f74b5;
+    background: #2f74b5;
+    border-radius: 4px;
+    color: #fff;
+    padding: 5px;
+  }
+}

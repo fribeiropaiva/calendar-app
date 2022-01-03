@@ -86,28 +86,6 @@
         width: 80%;
       }
     }
-
-    .reminder {
-      width: 100%;
-      white-space: nowrap;
-      // text-overflow: ellipsis;
-      overflow-x: scroll;
-      font-size: 1vmax;
-
-      &::-webkit-scrollbar {
-        height: 3px;
-        width: 3px;
-      }
-
-      &::-webkit-scrollbar-track {
-        background: #fff;
-      }
-
-      &::-webkit-scrollbar-thumb {
-        background: #aeaeae;
-        border-radius: 20px;
-      }
-    }
   }
 }
 

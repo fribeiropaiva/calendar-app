@@ -12,23 +12,6 @@
       background: #fff;
       font-size: 3vmax;
     }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 15px;
-
-      label {
-        input {
-          margin-left: 10px;
-        }
-      }
-
-      button {
-        align-self: center;
-        margin-top: 10px;
-      }
-    }
   }
 
   .weekdays,
@@ -69,4 +52,24 @@
     grid-template-rows: repeat(5, 1fr);
     margin-top: unset;
   }
+}
+
+.Modal {
+  background: #fff;
+  width: 320px;
+  height: 230px;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
 }

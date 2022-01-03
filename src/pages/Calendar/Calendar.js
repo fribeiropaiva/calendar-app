@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { CalendarDay } from '../../components/CalendarDay';
 import './calendar.scss';
 import moment from 'moment';
+import Modal from 'react-modal';
 import { buildCalendar } from '../../utils/buildCalendar';
+import { CalendarDay } from '../../components/CalendarDay';
+import { AddNewReminderForm } from '../../components/AddNewReminderForm';
 
 function Calendar(props) {
   const [calendar, setCalendar] = useState([]);
@@ -12,6 +14,7 @@ function Calendar(props) {
   const [calendarState, setCalendarState] = useState([]);
   const [newReminderDate, setNewReminderDate] = useState(null);
   const [city, setCity] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -25,11 +28,11 @@ function Calendar(props) {
   }
 
   function handleAddNewReminder() {
-    setIsAddingNew(true);
+    setIsModalOpen(true);
   }
 
-  function handleCloseNewReminderInput() {
-    setIsAddingNew(false);
+  function handleCloseModal() {
+    setIsModalOpen(false);
   }
 
   function handleSubmitNewReminder() {
@@ -75,23 +78,7 @@ function Calendar(props) {
   return (
     <div className="container">
       <header>
-        {isAddingNew ?
-            <form onSubmit={(e) => e.preventDefault()}>
-              <button className='close-new-reminder-input' onClick={handleCloseNewReminderInput}>X</button>
-              <label for='add-new-reminder'>Reminder:
-                <input id='add-new-reminder' className='add-new-reminder-input' type='text' value={reminderContent}  maxlength="30" onChange={(e) => setReminderContent(e.target.value)} />
-              </label>
-              <label for='new-reminder-date'>Date:
-                <input id='new-reminder-date' className='new-reminder-date' type='datetime-local' value={newReminderDate} onChange={(e) => setNewReminderDate(e.target.value)} />
-              </label>
-              <label>City:
-                <input id='city' className='city' type='text' value={city} onChange={(e) => setCity(e.target.value)}/>
-              </label>
-              <button type='submit' onClick={() => handleSubmitNewReminder()}>Save</button>
-            </form>
-            :
-            <button className='add-new-reminder-button' onClick={handleAddNewReminder}>+</button>
-          }
+        <button className='add-new-reminder-button' onClick={handleAddNewReminder}>+</button>
       </header>
       <div className='weekdays'>
         {weekDays.map((day => <p className='week-day'>{day}</p>))}
@@ -99,6 +86,23 @@ function Calendar(props) {
       <section className='calendar'>
         {calendar.map((day) => <CalendarDay key={day.format('MM/DD/YYYY')} day={day} value={value} calendarState={calendarState} />)}
       </section>
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={handleCloseModal}
+        className='Modal'
+        overlayClassName='Overlay'
+        >
+          <AddNewReminderForm
+            city={city}
+            setCity={setCity}
+            handleCloseModal={handleCloseModal}
+            reminderContent={reminderContent}
+            setReminderContent={setReminderContent}
+            newReminderDate={newReminderDate}
+            setNewReminderDate={setNewReminderDate}
+            handleSubmitNewReminder={handleSubmitNewReminder}
+          />
+        </Modal>
     </div>
   )
 }
