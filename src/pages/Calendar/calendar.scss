@@ -1,13 +1,42 @@
 .container {
-  width: 90vw;
+  width: 60vw;
   margin: 0 auto;
 
-  header,
+  header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    .add-new-reminder-button,
+    .close-new-reminder-input {
+      border: none;
+      background: #fff;
+      font-size: 3vmax;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 15px;
+
+      label {
+        input {
+          margin-left: 10px;
+        }
+      }
+
+      button {
+        align-self: center;
+        margin-top: 10px;
+      }
+    }
+  }
+
+  .weekdays,
   .calendar {
     display: grid;
   }
 
-  header {
+  .weekdays {
     background: #2f74b5;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: repeat(1, 1fr);

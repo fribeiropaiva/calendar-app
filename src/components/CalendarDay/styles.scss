@@ -1,10 +1,37 @@
 .calendar-day {
   background-color: #fff;
-  height: 19.26vmin;
+  height: 80px;
   border: 1px solid #c9c9c9;
   font-weight: 700;
   transition: transform 0.5s;
   overflow-x: hidden;
+
+  .day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .day-container {
+      margin-left: 0.6vmax;
+    }
+
+    .controls {
+      padding-right: 5px;
+
+      .add-new-reminder,
+      .close-new-reminder-input {
+        font-size: 1.55vmax;
+        font-weight: 400;
+        border: none;
+        background: none;
+        cursor: pointer;
+      }
+
+      .close-new-reminder-input {
+        font-size: 1.25vmax;
+      }
+    }
+  }
 
   &::-webkit-scrollbar {
     width: 3px;
@@ -21,15 +48,19 @@
 
   &.not-from-this-month {
     color: #aeaeae;
+
+    .day-header {
+      .controls {
+        .add-new-reminder {
+          cursor: unset;
+        }
+      }
+    }
   }
 
   &:hover {
     transform: scale(1.2);
     z-index: 2;
-  }
-
-  .day-container {
-    margin-left: 0.6vmax;
   }
 
   &.weekend-day:not(.not-from-this-month) {
@@ -45,12 +76,36 @@
     height: 90%;
     width: 100%;
 
+    .reminder-controls {
+      width: 100%;
+      display: flex;
+      flex-wrap: nowrap;
+
+      .new-reminder-input {
+        width: 80%;
+      }
+    }
+
     .reminder {
       width: 100%;
       white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
+      // text-overflow: ellipsis;
+      overflow-x: scroll;
       font-size: 1vmax;
+
+      &::-webkit-scrollbar {
+        height: 3px;
+        width: 3px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: #fff;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: #aeaeae;
+        border-radius: 20px;
+      }
     }
   }
 }
