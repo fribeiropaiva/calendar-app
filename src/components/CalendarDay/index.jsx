@@ -11,23 +11,18 @@ export function CalendarDay({ day, value, calendarState }) {
   const isWeekendDay = (dayName === 'Saturday' || dayName === 'Sunday');
 
   useEffect(() => {
-    if (calendarState.length && calendarState[0].date === date) {
-      setReminders([...calendarState[0].reminders])
+    function getReminders() {
+      const filteredReminders = calendarState.filter(entry => entry.date === date);
+
+      if (filteredReminders.length) {
+        setReminders([...filteredReminders[0].reminders])
+      }
     }
-  }, [date, calendarState])
 
-  // function addReminderToCalendarDay(date) {
-  //   const newReminder = {
-  //     content,
-  //     id: generateId()
-  //   }
-
-  //   calendarDayContent.reminders.push(newReminder);
-
-  //   addToCalendar((oldstate) => [...oldstate, calendarDayContent]);
-  //   setReminders((oldstate) => [...oldstate, newReminder])
-  //   setContent('');
-  // }
+    if (isThisMonth) {
+      getReminders();
+    }
+  }, [date, calendarState, isThisMonth]);
 
   return (
     <div className={`calendar-day ${isWeekendDay ? 'weekend-day' : ''} ${isThisMonth ? '' : 'not-from-this-month'}`}>

@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { CalendarDay } from '../../components/CalendarDay';
 import './calendar.scss';
 import moment from 'moment';
-import { buildCalendar } from '../../utils/calendarHelpers';
-import { scryRenderedComponentsWithType } from 'react-dom/test-utils';
+import { buildCalendar } from '../../utils/buildCalendar';
 
 function Calendar(props) {
   const [calendar, setCalendar] = useState([]);
@@ -34,7 +33,6 @@ function Calendar(props) {
   }
 
   function handleSubmitNewReminder() {
-    console.log('saved')
     const chosenDate = moment(new Date(newReminderDate)).format('MM/DD/YYYY');
 
     const calendarStateAtDate = calendarState.find(entry => entry.date === chosenDate);
@@ -42,19 +40,32 @@ function Calendar(props) {
     if (!calendarStateAtDate) {
       const newCalendarDayContent = {
         date: chosenDate,
-        reminders: []
+        reminders: [{
+          content: reminderContent,
+          id: generateId(),
+          city
+        }]
       }
 
-      newCalendarDayContent.reminders.push({
-        content: reminderContent,
-        id: generateId(),
-        city
-      })
-
-      setCalendarState((oldState) => [...oldState, newCalendarDayContent])
+      setCalendarState(calendarState.concat(newCalendarDayContent))
     } else {
-      setCalendarState((oldState) => [...oldState, {...calendarStateAtDate, reminders:[...calendarStateAtDate.reminders, reminderContent]}])
+      const updatedCalendarState = calendarState.map(entry => {
+        if (entry.date === chosenDate) {
+          entry.reminders.push({
+            content: reminderContent,
+            id: generateId(),
+            city
+          });
+        }
+        return entry;
+      });
+
+      setCalendarState(updatedCalendarState)
     }
+
+    setReminderContent('');
+    setNewReminderDate('');
+    setCity('');
   }
 
   return (
