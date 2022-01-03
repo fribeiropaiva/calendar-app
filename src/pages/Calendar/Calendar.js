@@ -33,7 +33,9 @@ function Calendar(props) {
   }
 
   function handleSubmitNewReminder() {
-    const chosenDate = moment(new Date(newReminderDate)).format('MM/DD/YYYY');
+    const dateObject = new Date(newReminderDate);
+    const chosenDate = moment(dateObject).format('MM/DD/YYYY');
+    const chosenTime = moment(dateObject).format('HH.mm.ss')
 
     const calendarStateAtDate = calendarState.find(entry => entry.date === chosenDate);
 
@@ -43,7 +45,8 @@ function Calendar(props) {
         reminders: [{
           content: reminderContent,
           id: generateId(),
-          city
+          city,
+          time: chosenTime
         }]
       }
 
@@ -54,7 +57,8 @@ function Calendar(props) {
           entry.reminders.push({
             content: reminderContent,
             id: generateId(),
-            city
+            city,
+            time: chosenTime
           });
         }
         return entry;

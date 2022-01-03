@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Reminder } from '../Reminder';
 import './styles.scss';
 
 export function CalendarDay({ day, value, calendarState }) {
@@ -35,7 +36,7 @@ export function CalendarDay({ day, value, calendarState }) {
       </div>
       <article className='reminders-container'>
         {reminders && !!reminders.length && reminders.map((reminder) => {
-          return <p key={reminder + Math.floor(Math.random() * 10000)} className='reminder'>{reminder.content}</p>
+          return <Reminder reminder={reminder} />
         }) }
       </article>
     </div>

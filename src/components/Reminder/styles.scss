@@ -1,0 +1,29 @@
+.reminder-container {
+  width: 100%;
+  white-space: nowrap;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  font-size: 1vmax;
+
+  .reminder {
+    margin-bottom: 0;
+  }
+
+  .city-time {
+    font-size: 0.5vmax;
+  }
+
+  &::-webkit-scrollbar {
+    height: 3px;
+    width: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #fff;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #aeaeae;
+    border-radius: 20px;
+  }
+}
