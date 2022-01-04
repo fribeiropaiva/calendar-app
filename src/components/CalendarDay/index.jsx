@@ -6,7 +6,7 @@ import './styles.scss';
 
 export function CalendarDay({ day, value, calendarDates }) {
   const [reminders, setReminders] = useState([]);
-  const [editMode, setEditMode] = useState(false);
+  const [expandedMode, setExpandedMode] = useState(false);
 
   const today = moment(new Date()).format('MM/DD/YYYY');
 
@@ -19,7 +19,6 @@ export function CalendarDay({ day, value, calendarDates }) {
 
   useEffect(() => {
     function getReminders() {
-      console.log(calendarDates)
       const filteredReminders = calendarDates.filter(entry => entry.date === date);
 
       if (filteredReminders.length) {
@@ -34,7 +33,7 @@ export function CalendarDay({ day, value, calendarDates }) {
   }, [date, calendarDates, isThisMonth]);
 
   function handleCalendarDayEditing() {
-    setEditMode(true)
+    setExpandedMode(true)
   }
 
   return (
@@ -42,20 +41,18 @@ export function CalendarDay({ day, value, calendarDates }) {
       onClick={handleCalendarDayEditing}
       className={`calendar-day ${isWeekendDay ? `weekend-day ${dayName.toLowerCase()}` : ''}
                 ${isThisMonth ? '' : 'not-from-this-month'}
-                ${editMode ? 'edit-mode' : ''}
+                ${expandedMode ? 'edit-mode' : ''}
                 ${isToday ? 'today' : ''}`}
-      onMouseLeave={() => setEditMode(false)}
+      onMouseLeave={() => setExpandedMode(false)}
     >
       <div className='day-header'>
         <div className='day-container'>
           {dayNumber}
         </div>
-        <div className='controls'>
-        </div>
       </div>
       <article className='reminders-container'>
         {reminders && !!reminders.length && reminders.map((reminder) => {
-          return <Reminder reminder={reminder} />
+          return <Reminder reminder={reminder} date={date} expandedMode={expandedMode} />
         }) }
       </article>
     </div>

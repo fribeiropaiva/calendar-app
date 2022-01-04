@@ -4,6 +4,10 @@
   overflow-y: hidden;
   overflow-x: scroll;
   font-size: 1vmax;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 3px 0;
 
   .reminder {
     margin-bottom: 0;
@@ -25,5 +29,20 @@
   &::-webkit-scrollbar-thumb {
     background: #aeaeae;
     border-radius: 20px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .controls {
+    display: flex;
+    justify-content: flex-start;
+    button {
+      border: none;
+      background: #fff;
+      cursor: pointer;
+    }
   }
 }

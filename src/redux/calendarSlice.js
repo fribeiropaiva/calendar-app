@@ -23,19 +23,20 @@ export const slice = createSlice({
       return [...payload]
     },
     editReminder(state, { payload }) {
-      const date = payload.date;
-      const updatedReminders = date.reminders.map(reminder => {
-        if (reminder.id === payload.id) {
-          reminder = payload.reminder;
+      const updatedReminders = state.map(date => {
+        if (date.date === payload.date) {
+          const reminders = date.reminders.map(reminder => {
+            if (reminder.id === payload.updatedReminder.id) {
+              return { ...payload.updatedReminder }
+            }
+            return reminder;
+          })
+          return {...date, reminders };
         }
-        return reminder;
+        return date;
       });
 
-      const updatedDate = {
-        date,
-        reminders: updatedReminders
-      }
-      return [ ...state, updatedDate]
+      return [...updatedReminders];
     },
     deleteReminder(state, { payload }) {
       const date = payload.date;
