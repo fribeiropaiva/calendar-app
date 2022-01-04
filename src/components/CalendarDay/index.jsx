@@ -33,6 +33,7 @@ export function CalendarDay({ day, value, calendarDates }) {
   }, [date, calendarDates, isThisMonth]);
 
   function handleCalendarDayEditing() {
+    if (!isThisMonth) return;
     setExpandedMode(true)
   }
 
