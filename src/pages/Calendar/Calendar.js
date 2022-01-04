@@ -14,25 +14,28 @@ function Calendar(props) {
   const [reminderContent, setReminderContent] = useState('');
   const [calendarState, setCalendarState] = useState([]);
   const [newReminderDate, setNewReminderDate] = useState(null);
-  const [city, setCity] = useState('Fortaleza');
+  const [city, setCity] = useState('');
+  const [cityName, setCityName] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [temperature, setTemperature] = useState(0);
+  const [temperature, setTemperature] = useState();
 
   const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
   useEffect(() => {
-    const newCalendar = buildCalendar(value)
-    setCalendar(newCalendar)
+    const newCalendar = buildCalendar(value);
+    setCalendar(newCalendar);
   }, [value]);
 
   useEffect(() => {
     async function getWeatherForecastForToday() {
-      const res = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=a0816844868c865a8774b875e09b5295`)
-      setTemperature(res.data.main.temp)
+      const res = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=a0816844868c865a8774b875e09b5295`)
+      setTemperature(res.data.main.temp);
     }
 
-    getWeatherForecastForToday();
-  }, [])
+    if (cityName) {
+      getWeatherForecastForToday();
+    }
+  }, [cityName]);
 
   function generateId() {
     return Math.floor(Math.random() * 100)
@@ -86,6 +89,10 @@ function Calendar(props) {
     setCity('');
   }
 
+  function handleSaveCity() {
+    setCityName(city);
+  }
+
   function handleEditReminder() {
     console.log('editing');
   }
@@ -95,7 +102,16 @@ function Calendar(props) {
       <header>
         <button className='add-new-reminder-button' onClick={handleAddNewReminder}>+</button>
         <div>
-          <p>It is {temperature} degrees today in Fortaleza</p>
+          {cityName
+            ?
+            <p>It is {temperature}ºC today in {city}</p>
+            :
+            <label htmlFor='city-input'>
+              Your city:
+              <input id='city-input' type='text' value={city} onChange={(e) => setCity(e.target.value)} />
+              <button type='button' onClick={handleSaveCity}>Save</button>
+            </label>
+          }
         </div>
       </header>
       <div className='weekdays'>
