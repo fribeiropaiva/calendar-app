@@ -4,7 +4,7 @@ import moment from 'moment';
 import axios from 'axios';
 import './styles.scss';
 
-export function CalendarDay({ day, value, calendarState }) {
+export function CalendarDay({ day, value, calendarDates }) {
   const [reminders, setReminders] = useState([]);
   const [editMode, setEditMode] = useState(false);
 
@@ -19,17 +19,19 @@ export function CalendarDay({ day, value, calendarState }) {
 
   useEffect(() => {
     function getReminders() {
-      const filteredReminders = calendarState.filter(entry => entry.date === date);
+      console.log(calendarDates)
+      const filteredReminders = calendarDates.filter(entry => entry.date === date);
 
       if (filteredReminders.length) {
         setReminders([...filteredReminders[0].reminders])
       }
+
     }
 
     if (isThisMonth) {
       getReminders();
     }
-  }, [date, calendarState, isThisMonth]);
+  }, [date, calendarDates, isThisMonth]);
 
   function handleCalendarDayEditing() {
     setEditMode(true)

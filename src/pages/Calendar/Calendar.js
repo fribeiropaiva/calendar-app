@@ -6,18 +6,22 @@ import axios from 'axios';
 import { buildCalendar } from '../../utils/buildCalendar';
 import { CalendarDay } from '../../components/CalendarDay';
 import { AddNewReminderForm } from '../../components/AddNewReminderForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { addReminder, addNewDate } from '../../redux/calendarSlice';
 
 function Calendar(props) {
   const [calendar, setCalendar] = useState([]);
   const [value, setValue] = useState(moment());
   const [isAddingNew, setIsAddingNew] = useState(false);
   const [reminderContent, setReminderContent] = useState('');
-  const [calendarState, setCalendarState] = useState([]);
+  // const [calendarDates, setCalendarState] = useState([]);
   const [newReminderDate, setNewReminderDate] = useState(null);
   const [city, setCity] = useState('');
   const [cityName, setCityName] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [temperature, setTemperature] = useState();
+  const { calendarDates } = useSelector(state => state);
+  const dispatch = useDispatch();
 
   const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -51,14 +55,14 @@ function Calendar(props) {
 
   function handleSubmitNewReminder() {
     const dateObject = new Date(newReminderDate);
-    const chosenDate = moment(dateObject).format('MM/DD/YYYY');
-    const chosenTime = moment(dateObject).format('HH.mm.ss')
+    const date = moment(dateObject).format('MM/DD/YYYY');
+    const chosenTime = moment(dateObject).format('HH:mm:ss');
 
-    const calendarStateAtDate = calendarState.find(entry => entry.date === chosenDate);
+    const calendarStateAtDate = calendarDates.find(entry => entry.date === date);
 
     if (!calendarStateAtDate) {
       const newCalendarDayContent = {
-        date: chosenDate,
+        date,
         reminders: [{
           content: reminderContent,
           id: generateId(),
@@ -67,23 +71,37 @@ function Calendar(props) {
         }]
       }
 
-      setCalendarState(calendarState.concat(newCalendarDayContent))
-    } else {
-      const updatedCalendarState = calendarState.map(entry => {
-        if (entry.date === chosenDate) {
-          entry.reminders.push({
-            content: reminderContent,
-            id: generateId(),
-            city,
-            time: chosenTime
-          });
-        }
-        return entry;
-      });
-
-      setCalendarState(updatedCalendarState)
+      // setCalendarSDate(calendarDates.concat(newCalendarDayContent))
+      return dispatch(addNewDate(newCalendarDayContent))
     }
 
+    const updatedCalendarDates = calendarDates.map(entry => {
+      if (entry.date === date) {
+        const newReminder = {
+          content: reminderContent,
+          id: generateId(),
+          city,
+          time: chosenTime
+        }
+        return {
+          date,
+          reminders: [...entry.reminders, newReminder]
+        }
+      }
+      return entry;
+    });
+
+      // const newReminder = {
+      //   content: reminderContent,
+      //   id: generateId(),
+      //   city,
+      //   time: chosenTime
+      // }
+
+      // const updatedDate = calendarDates.filter(entry => entry.date === date);
+      // const reminders = [...updatedDate[0].reminders, newReminder]
+
+    dispatch(addReminder(updatedCalendarDates));
     setReminderContent('');
     setNewReminderDate('');
     setCity('');
@@ -118,7 +136,7 @@ function Calendar(props) {
         {weekDays.map((day => <p className='week-day'>{day}</p>))}
       </div>
       <section className='calendar'>
-        {calendar.map((day) => <CalendarDay key={day.format('MM/DD/YYYY')} day={day} value={value} calendarState={calendarState} />)}
+        {calendar.map((day) => <CalendarDay key={day.format('MM/DD/YYYY')} day={day} value={value} calendarDates={calendarDates} />)}
       </section>
       <Modal
         isOpen={isModalOpen}
