@@ -5,6 +5,7 @@
   header {
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     .add-new-reminder-button,
     .close-new-reminder-input {

@@ -7,6 +7,10 @@
   overflow-x: hidden;
   cursor: pointer;
 
+  &.today {
+    border: 3px solid #2f74b5;
+  }
+
   .day-header {
     display: flex;
     justify-content: space-between;

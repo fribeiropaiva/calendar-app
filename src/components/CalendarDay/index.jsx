@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { Reminder } from '../Reminder';
+import moment from 'moment';
+import axios from 'axios';
 import './styles.scss';
 
 export function CalendarDay({ day, value, calendarState }) {
   const [reminders, setReminders] = useState([]);
   const [editMode, setEditMode] = useState(false);
 
-  const isThisMonth = day.format('MMMM') === value.clone().format('MMMM');
+  const today = moment(new Date()).format('MM/DD/YYYY');
+
   const dayName = day.format('dddd');
   const dayNumber = day.format('D');
-  const date = day.format("MM/DD/YYYY");
+  const date = day.format('MM/DD/YYYY');
+  const isThisMonth = day.format('MMMM') === value.clone().format('MMMM');
   const isWeekendDay = (dayName === 'Saturday' || dayName === 'Sunday');
+  const isToday = today === date;
 
   useEffect(() => {
     function getReminders() {
@@ -35,7 +40,8 @@ export function CalendarDay({ day, value, calendarState }) {
       onClick={handleCalendarDayEditing}
       className={`calendar-day ${isWeekendDay ? `weekend-day ${dayName.toLowerCase()}` : ''}
                 ${isThisMonth ? '' : 'not-from-this-month'}
-                ${editMode ? 'edit-mode' : ''}`}
+                ${editMode ? 'edit-mode' : ''}
+                ${isToday ? 'today' : ''}`}
       onMouseLeave={() => setEditMode(false)}
     >
       <div className='day-header'>
