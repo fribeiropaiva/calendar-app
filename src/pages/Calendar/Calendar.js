@@ -3,6 +3,7 @@ import "./calendar.scss";
 import moment from "moment";
 import Modal from "react-modal";
 import axios from "axios";
+import { FaCheck, FaRegWindowClose } from 'react-icons/fa';
 import { buildCalendar } from "../../utils/buildCalendar";
 import { CalendarDay } from "../../components/CalendarDay";
 import { AddNewReminderForm } from "../../components/AddNewReminderForm";
@@ -12,9 +13,7 @@ import { addReminder, addNewDate } from "../../redux/calendarSlice";
 function Calendar(props) {
   const [calendar, setCalendar] = useState([]);
   const [value, setValue] = useState(moment());
-  const [isAddingNew, setIsAddingNew] = useState(false);
   const [reminderContent, setReminderContent] = useState("");
-  // const [calendarDates, setCalendarState] = useState([]);
   const [newReminderDate, setNewReminderDate] = useState(null);
   const [city, setCity] = useState("");
   const [cityName, setCityName] = useState("");
@@ -85,7 +84,6 @@ function Calendar(props) {
         ]
       };
 
-      // setCalendarSDate(calendarDates.concat(newCalendarDayContent))
       return dispatch(addNewDate(newCalendarDayContent));
     }
 
@@ -104,16 +102,6 @@ function Calendar(props) {
       }
       return entry;
     });
-
-    // const newReminder = {
-    //   content: reminderContent,
-    //   id: generateId(),
-    //   city,
-    //   time: chosenTime
-    // }
-
-    // const updatedDate = calendarDates.filter(entry => entry.date === date);
-    // const reminders = [...updatedDate[0].reminders, newReminder]
 
     dispatch(addReminder(updatedCalendarDates));
     setReminderContent("");
@@ -134,25 +122,35 @@ function Calendar(props) {
         >
           +
         </button>
-        <div>
-          {cityName ? (
-            <p>
-              It is {temperature}ºC today in {city}
-            </p>
-          ) : (
-            <label htmlFor="city-input">
-              Your city:
-              <input
-                id="city-input"
-                type="text"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-              />
-              <button type="button" onClick={handleSaveCity}>
-                Save
-              </button>
-            </label>
-          )}
+        <div className='city-month-name-container'>
+          <p>{moment().format('MMMM')}</p>
+          <div>
+            {cityName ? (
+              <>
+                <p>
+                  It is {temperature}ºC today in {city}
+                </p>
+                <button type="button" onClick={() => setCityName('')}>
+                  <FaRegWindowClose />
+                </button>
+              </>
+            ) : (
+              <>
+                <label htmlFor="city-input">
+                  Your city:
+                  <input
+                    id="city-input"
+                    type="text"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                  />
+                </label>
+                <button type="button" onClick={handleSaveCity}>
+                  <FaCheck />
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </header>
       <div className="weekdays">
