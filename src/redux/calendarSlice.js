@@ -39,17 +39,18 @@ export const slice = createSlice({
       return [...updatedReminders];
     },
     deleteReminder(state, { payload }) {
-      const date = payload.date;
-      const updatedReminders = date.reminders.filter(reminder => reminder.id !== payload.id);
-      const updatedDate = {
-        date,
-        reminders: updatedReminders
-      }
+      const updatedReminders = state.map(date => {
+        if (date.date === payload.date) {
+          const reminders = date.reminders.filter(reminder => reminder.id !== payload.id);
+          return {...date, reminders };
+        }
+        return date;
+      });
 
-      return [...state, updatedDate]
+      return [...updatedReminders];
     }
   }
-})
+});
 
 export const { addNewDate, addReminder, editReminder, deleteReminder } = slice.actions;
 

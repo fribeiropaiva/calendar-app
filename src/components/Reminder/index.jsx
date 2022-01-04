@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaEdit, FaTrash, FaCheck, FaRegWindowClose } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { editReminder } from '../../redux/calendarSlice';
+import { editReminder, deleteReminder } from '../../redux/calendarSlice';
 import './styles.scss';
 
 export function Reminder({ reminder, date, expandedMode }) {
@@ -24,6 +24,12 @@ export function Reminder({ reminder, date, expandedMode }) {
     setEditMode(false);
   }
 
+  function handleDelete() {
+    const id = reminder.id;
+    dispatch(deleteReminder({ date, id }));
+    console.log(appState)
+  }
+
   return (
     <div className='reminder-container'>
       {editMode && expandedMode ?
@@ -42,7 +48,7 @@ export function Reminder({ reminder, date, expandedMode }) {
       {expandedMode && !editMode ?
           <div className='controls'>
             <button onClick={() => setEditMode(true)} className='edit-button'><FaEdit /></button>
-            <button className='delete-button'><FaTrash /></button>
+            <button onClick={handleDelete} className='delete-button'><FaTrash /></button>
           </div>
           :
           null
