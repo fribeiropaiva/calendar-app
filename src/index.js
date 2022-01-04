@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import { BrowserRouter } from 'react-router-dom';
 import { Provider as ReduxProvider } from "react-redux";
 import store from './redux/store';
-import reducers from './reducers';
 import Main from './Main';
 import reportWebVitals from "./reportWebVitals";
 

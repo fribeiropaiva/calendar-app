@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 export const slice = createSlice({
-  name: 'calendar',
+  name: "calendar",
   initialState: [],
   reducers: {
     addNewDate(state, { payload }) {
@@ -15,23 +15,23 @@ export const slice = createSlice({
       //   }
       //   return [...state, updatedDate]
       // }
-      return [ ...state, payload]
+      return [...state, payload];
     },
     addReminder(state, { payload }) {
       // const date = payload.date;
       // const reminders = payload.reminders;
-      return [...payload]
+      return [...payload];
     },
     editReminder(state, { payload }) {
-      const updatedReminders = state.map(date => {
+      const updatedReminders = state.map((date) => {
         if (date.date === payload.date) {
-          const reminders = date.reminders.map(reminder => {
+          const reminders = date.reminders.map((reminder) => {
             if (reminder.id === payload.updatedReminder.id) {
-              return { ...payload.updatedReminder }
+              return { ...payload.updatedReminder };
             }
             return reminder;
-          })
-          return {...date, reminders };
+          });
+          return { ...date, reminders };
         }
         return date;
       });
@@ -39,10 +39,12 @@ export const slice = createSlice({
       return [...updatedReminders];
     },
     deleteReminder(state, { payload }) {
-      const updatedReminders = state.map(date => {
+      const updatedReminders = state.map((date) => {
         if (date.date === payload.date) {
-          const reminders = date.reminders.filter(reminder => reminder.id !== payload.id);
-          return {...date, reminders };
+          const reminders = date.reminders.filter(
+            (reminder) => reminder.id !== payload.id
+          );
+          return { ...date, reminders };
         }
         return date;
       });
@@ -52,9 +54,10 @@ export const slice = createSlice({
   }
 });
 
-export const { addNewDate, addReminder, editReminder, deleteReminder } = slice.actions;
+export const { addNewDate, addReminder, editReminder, deleteReminder } =
+  slice.actions;
 
-export const selectDay = state => state.day;
+export const selectDay = (state) => state.day;
 
 export default slice.reducer;
 
