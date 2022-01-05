@@ -124,7 +124,7 @@ function Calendar(props) {
         </button>
         <div className='city-month-name-container'>
           <p>{moment().format('MMMM')}</p>
-          <div>
+          <div className='city-input-container'>
             {cityName ? (
               <>
                 <p>

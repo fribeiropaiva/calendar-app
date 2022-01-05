@@ -1,6 +1,6 @@
 .calendar-day {
   background-color: #fff;
-  height: 80px;
+  height: 11vmin;
   border: 1px solid #c9c9c9;
   font-weight: 700;
   transition: transform 0.5s;
@@ -90,12 +90,12 @@
 
 @media (max-width: 720px) {
   .calendar-day {
-    height: 12vmax;
+    height: 8vmax;
   }
 }
 
 @media (max-width: 480px) {
   .calendar-day {
-    height: 8vmax;
+    height: 6vmax;
   }
 }
