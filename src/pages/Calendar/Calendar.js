@@ -40,7 +40,7 @@ function Calendar(props) {
   useEffect(() => {
     async function getWeatherForecastForToday() {
       const res = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=a0816844868c865a8774b875e09b5295`
+        `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=${process.env.REACT_APP_OPEN_WEATHER_KEY}`
       );
       setTemperature(res.data.main.temp);
     }
